@@ -3,11 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluxDb.Helper", "InfluxDb.Helper\InfluxDb.Helper.csproj", "{BEAD835D-1157-4721-84D9-88A5A2F59C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfluxDb.Helper", "InfluxDb.Helper\InfluxDb.Helper.csproj", "{BEAD835D-1157-4721-84D9-88A5A2F59C4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluxDb.NUnitTest", "InfluxDb.NUnitTest\InfluxDb.NUnitTest.csproj", "{204CEA45-587A-4E1B-A89B-96BBDD3115CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfluxDb.NUnitTest", "InfluxDb.NUnitTest\InfluxDb.NUnitTest.csproj", "{204CEA45-587A-4E1B-A89B-96BBDD3115CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F128F32C-1541-4E50-A605-7EFAD91E51AE}"
+	ProjectSection(SolutionItems) = preProject
+		nupkg.txt = nupkg.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A4F45748-259F-48DA-B49F-10E1712D5FCF}"
 EndProject

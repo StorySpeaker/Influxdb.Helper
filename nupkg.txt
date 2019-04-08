@@ -1,0 +1,2 @@
+dotnet nuget push InfluxDb.Helper.1.0.0-beta1.nupkg -k oy2kxwnxfi
+422xvjfigqtsugstsu55duboau3umwhhr2mm  -s https://www.nuget.org
