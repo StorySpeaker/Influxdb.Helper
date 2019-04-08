@@ -1,8 +1,10 @@
 ﻿using AdysTech.InfluxDB.Client.Net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace InfluxDb.Helper
@@ -12,7 +14,9 @@ namespace InfluxDb.Helper
         //声明InfluxDbClient
         protected InfluxDBClient InfluxDBConnection;
 
-        protected abstract string DbName { get; }
+        private static readonly string DbName = nameof(InfluxDbBase);
+
+        protected abstract string TableName { get; set; }
 
         public InfluxDbCache(IInfluxDbConfiguration configuration)
         {
@@ -27,7 +31,23 @@ namespace InfluxDb.Helper
 
         public async Task<InfluxDbBase> GetAsync(Entity entity)
         {
-            throw new NotImplementedException();
+            //var result = await InfluxDBConnection.QueryMultiSeriesAsync(DbName,);
+            throw new Exception();
+        }
+
+        public async Task InsertAsync(InfluxDbBase dbBase)
+        {
+            var valMixed = new InfluxDatapoint<InfluxValueField>();
+            valMixed.UtcTimestamp = DateTime.UtcNow;
+            valMixed.Tags.Add("Date", DateTime.UtcNow.ToShortDateString());
+            valMixed.Tags.Add("Time", DateTime.UtcNow.ToShortTimeString());
+            var list = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(dbBase));
+            foreach (var item in list)
+            {
+                valMixed.Fields.Add($"{item.Key}", new InfluxValueField(item.Value));
+            }
+
+            var r = await InfluxDBConnection.PostPointAsync(DbName, valMixed);
         }
 
         /// <summary>
@@ -47,6 +67,16 @@ namespace InfluxDb.Helper
         public async Task<bool> CreateNewDatabase(string dbname)
         {
             return await InfluxDBConnection.CreateDatabaseAsync(dbname);
+        }
+
+        /// <summary>
+        /// Get All List
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<IInfluxSeries>> GetAllListAsync()
+        {
+            var list = await InfluxDBConnection.QueryMultiSeriesAsync(DbName, $"select * from {TableName} WHERE 1=1");
+            return list.ToList(); ;
         }
     }
 }
